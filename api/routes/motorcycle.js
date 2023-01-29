@@ -15,8 +15,8 @@ router.get("/", (req,res,next) => {
     .select("year make model _id")
     .exec()
     .then((motorcycles) => {
-        if (motorcycles < 1) {
-            res.status(200).json({
+        if(motorcycles.length === 0){
+            res.status(406).json({
                 message: "No motorcycles listed. Add motorcycles to list."
             });
         }
@@ -37,7 +37,7 @@ router.get("/", (req,res,next) => {
 })
 
 //post or create
-router.post("/",(req,res,next) => {
+router.post("/",(req,res,next) => {    
     const newMotorcycle = new Motorcycle({
         _id: mongoose.Types.ObjectId(),
         year: req.body.year,
